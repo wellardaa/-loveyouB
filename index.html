@@ -101,13 +101,22 @@
             document.getElementById('step1').classList.add('hidden');
             document.getElementById('step2').classList.remove('hidden');
         }
-
         function showHeart() {
             document.getElementById('step2').classList.add('hidden');
-            document.getElementById('final').style.display = 'flex';
+            document.getElementById('container').classList.add('hidden'); // Beyaz kutuyu komple gizle
+            
+            // Final ekranını görünür yap ve ekranın tam ortasına al
+            const final = document.getElementById('final');
+            final.style.display = 'flex';
+            final.style.position = 'fixed';
+            final.style.top = '50%';
+            final.style.left = '50%';
+            final.style.transform = 'translate(-50%, -50%)';
+            
+            // Arka planı değiştir
             document.body.style.backgroundColor = "#ff4d6d";
-            document.getElementById('container').style.display = "none";
         }
+        
     </script>
 </body>
 </html>
