@@ -2,10 +2,11 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Sana Bir Mesajım Var</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             background-color: #ffeef2;
             font-family: 'Press+Start+2P', cursive;
@@ -16,64 +17,65 @@
             margin: 0;
             overflow: hidden;
             transition: background-color 0.5s;
+            touch-action: manipulation;
         }
 
         #container {
             background: white;
-            padding: 40px;
-            border: 6px solid #000;
-            box-shadow: 12px 12px 0px #ff4d6d;
-            max-width: 400px;
+            padding: 30px 20px;
+            border: 5px solid #000;
+            box-shadow: 8px 8px 0px #ff4d6d;
+            width: 90%;
+            max-width: 350px;
             text-align: center;
-            position: relative;
-            z-index: 2;
+            z-index: 10;
         }
 
-        h2 { font-size: 14px; line-height: 1.8; margin-bottom: 30px; color: #222; }
+        h2 { font-size: 12px; line-height: 1.6; margin-bottom: 25px; color: #222; }
 
-        .btn-group { display: flex; gap: 15px; justify-content: center; }
+        .btn-group { display: flex; flex-direction: column; gap: 15px; align-items: center; }
 
         button {
             font-family: 'Press+Start+2P', cursive;
-            padding: 12px 20px;
-            font-size: 10px;
+            padding: 15px;
+            font-size: 11px;
             cursor: pointer;
             border: 4px solid #000;
             background: #fff;
             box-shadow: 4px 4px 0px #000;
+            width: 100%;
+            max-width: 200px;
         }
 
-        button:active { transform: translate(4px, 4px); box-shadow: 0px 0px 0px #000; }
+        button:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0px #000; }
         .evet { background-color: #98ff98; }
         .hayir { background-color: #ffb3ba; }
 
-        /* Final Ekranı Ayarları */
         #final {
-            display: none; /* Başlangıçta gizli */
+            display: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0; left: 0; width: 100%; height: 100%;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            width: 100%;
+            background-color: #ff4d6d;
             z-index: 100;
+            text-align: center;
         }
 
         .pixel-heart {
-            font-size: 150px;
-            color: #ff0040;
+            font-size: 80px; /* Mobilde taşmaması için küçültüldü */
+            color: #fff;
             animation: blink 0.8s infinite steps(1);
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         .heart-text {
-            font-size: 16px;
+            font-size: 14px;
             color: white;
-            text-shadow: 4px 4px 0px #000;
+            text-shadow: 3px 3px 0px #000;
             padding: 0 20px;
+            line-height: 1.8;
         }
 
         @keyframes blink {
@@ -87,7 +89,7 @@
 </head>
 <body>
 
-    <audio id="bgMusic" loop>
+    <audio id="bgMusic" loop playsinline>
         <source src="sarkim.mp3" type="audio/mpeg">
     </audio>
 
@@ -111,28 +113,30 @@
 
     <div id="final">
         <div class="pixel-heart">❤</div>
-        <div class="heart-text">Seni tabii ki çok seviyorum!</div>
+        <div class="heart-text">SENİ TABİİ Kİ ÇOK SEVİYORUM!</div>
     </div>
 
     <script>
         const music = document.getElementById('bgMusic');
 
         function startProcess() {
-            music.play().catch(e => console.log("Müzik etkileşim bekliyor..."));
+            // Mobilde müzik tetikleme
+            music.play().then(() => {
+                console.log("Müzik başladı");
+            }).catch(e => {
+                console.log("Müzik için etkileşim gerekiyor");
+            });
+            
             document.getElementById('step1').classList.add('hidden');
             document.getElementById('step2').classList.remove('hidden');
         }
 
         function showHeart() {
-            // Beyaz kutuyu tamamen kaldır
-            document.getElementById('container').style.display = "none";
-            
-            // Arka planı kırmızı yap
-            document.body.style.backgroundColor = "#ff4d6d";
-            
-            // Kalbi ve yazıyı göster
+            document.getElementById('container').classList.add('hidden');
             const final = document.getElementById('final');
             final.style.display = 'flex';
+            // Arka planı garantiye al
+            document.body.style.backgroundColor = "#ff4d6d";
         }
     </script>
 </body>
